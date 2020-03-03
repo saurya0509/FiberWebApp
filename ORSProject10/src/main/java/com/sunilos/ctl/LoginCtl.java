@@ -2,18 +2,22 @@ package com.sunilos.ctl;
 
 import java.util.Enumeration;
 import java.util.LinkedHashSet;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.apache.tomcat.util.bcel.classfile.EnumElementValue;
+import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.sunilos.common.BaseCtl;
@@ -45,8 +49,9 @@ public class LoginCtl extends BaseCtl<UserForm, UserDTO, UserServiceInt> {
 	 * @param loginId
 	 * @return
 	 */
-	@GetMapping("login/{loginId}")
-	public ORSResponse get(@PathVariable String loginId) {
+    @RequestMapping(value = "/login", method = RequestMethod.GET, produces= MediaType.APPLICATION_JSON_VALUE )
+	public ORSResponse get(@RequestParam("login") String loginId) {
+    	System.out.println("login ctl get method"+loginId);
 		ORSResponse res = new ORSResponse(true);
 		UserDTO dto = baseService.findByLoginId(loginId, userContext);
 		System.out.println("User " + dto);
@@ -95,8 +100,12 @@ public class LoginCtl extends BaseCtl<UserForm, UserDTO, UserServiceInt> {
 	 * 
 	 * @return
 	 */
-	@GetMapping("fp/{login}")
-	public ORSResponse forgotPassword(@PathVariable String login, HttpServletRequest request) {
+	@RequestMapping(value = "fp", method = RequestMethod.GET, produces=MediaType.APPLICATION_JSON_VALUE)
+	public ORSResponse forgotPassword(@RequestParam Map<String , String> requestParam, HttpServletRequest request) {
+		String login=requestParam.get("login");
+		System.out.println(requestParam.get("login"));
+		System.out.println(requestParam.get("firstName"));
+		System.out.println(requestParam.get("lastName"));
 		
 		Enumeration<String> e =  request.getHeaderNames();
 		String key = null;
