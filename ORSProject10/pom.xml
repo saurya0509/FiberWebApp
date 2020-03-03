@@ -13,7 +13,7 @@
 
 	<groupId>com.sunilos</groupId>
 	<artifactId>springboottest</artifactId>
-	<version>0.0.8-SNAPSHOT</version>
+	<version>0.0.9-SNAPSHOT</version>
 	<name>springboottest</name>
 	<packaging>jar</packaging>
 	<description>Demo project for Spring Boot</description>
